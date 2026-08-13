@@ -1,0 +1,16 @@
+.DS_Store
+Thumbs.db
+*.zip
+*.sha256.txt
+.env
+.env.*
+!.env.example
+auth.json
+cookies.json
+browser_state/
+node_modules/
+__pycache__/
+*.pyc
+.coverage
+coverage.xml
+.pytest_cache/

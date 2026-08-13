@@ -1,0 +1,4 @@
+interface:
+  display_name: "Issue Ledger"
+  short_description: "Layered project issue tracking"
+  default_prompt: "Use $issue-ledger to create or update a layered issue ledger for this project."

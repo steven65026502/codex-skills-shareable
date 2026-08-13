@@ -1,0 +1,3 @@
+display_name: Obsidian GitHub Backup
+short_description: Back up Obsidian to private GitHub.
+default_prompt: Back up my Obsidian vault to GitHub.

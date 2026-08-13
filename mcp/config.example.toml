@@ -1,0 +1,17 @@
+# Example only. Merge selected sections into ~/.codex/config.toml.
+# Replace placeholders locally and never commit real credentials.
+
+[mcp_servers.obsidian]
+command = "npx"
+args = ["-y", "obsidian-mcp-server@2.0.7"]
+
+[mcp_servers.obsidian.env]
+OBSIDIAN_API_KEY = "<RECIPIENT_SETS_LOCALLY>"
+OBSIDIAN_BASE_URL = "<RECIPIENT_SETS_LOCALLY>"
+OBSIDIAN_ENABLE_CACHE = "<RECIPIENT_SETS_LOCALLY>"
+OBSIDIAN_VERIFY_SSL = "<RECIPIENT_SETS_LOCALLY>"
+
+# Optional direct GitHub MCP example. Prefer supported plugin or OAuth login.
+[mcp_servers.github]
+url = "https://api.githubcopilot.com/mcp/"
+bearer_token_env_var = "GITHUB_PAT_TOKEN"
