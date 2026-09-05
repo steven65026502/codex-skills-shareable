@@ -1,6 +1,6 @@
 ---
 name: research-project-orienter
-description: Read the .research/ manifest files at a project root and produce a single orientation memo (research question, datasets, current stage, key entrypoints, evidence artifacts, open questions). Use when the user asks to "orient me in this project", "what is this repo about", or "build a context map for this paper" — and the project already has .research/ manifests (or trigger research-context-compressor first).
+description: Read existing .research manifest files and produce a read-only orientation memo covering the research question, datasets, current stage, entry points, evidence, and open questions. Use when the user asks to orient in a project that already has manifests. If they are absent, report that and suggest research-context-compressor; do not run it automatically.
 ---
 
 # research-project-orienter
@@ -13,8 +13,8 @@ in-conversation orientation memo.
 Part of the research-hub skill pack; works alongside Zotero, Obsidian,
 and NotebookLM workflows but does not require any of them.
 
-This skill is fast and read-only. If `.research/` doesn't exist yet,
-defer to `research-context-compressor` first.
+This skill is read-only. If `.research/` doesn't exist yet, report that
+prerequisite and suggest `research-context-compressor`.
 
 ## When to use
 
@@ -50,10 +50,9 @@ points you at a specific path AND the user's question requires it.
 
 Tell the user:
 
-> This project doesn't have a `.research/` manifest yet. I can create one
-> first (loads `research-context-compressor` skill, takes ~30 seconds and
-> writes 3 small YAML files), or I can fall back to scanning the repo
-> directly (slower, more tokens). Which?
+> This project doesn't have a `.research/` manifest yet. I can create a
+> small manifest set with `research-context-compressor`, or I can scan the
+> repository directly for this one orientation. Which do you prefer?
 
 Don't auto-fall-back — ask first. If they pick "scan", read README.md +
 `docs/` + the top-level entrypoint, and produce the memo from that, but

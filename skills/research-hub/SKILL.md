@@ -1,6 +1,6 @@
 ---
 name: research-hub
-description: Operate research-hub workflows for literature discovery, source ingest into Zotero/Obsidian/NotebookLM, dashboard inspection, and vault maintenance. Use when the user asks to find papers, build a knowledge base, ingest a folder of PDFs, upload to NotebookLM, generate research briefs, inspect clusters, or maintain a research vault. NOT for auditing or cleaning up an existing Zotero library — that's `zotero-library-curator` (read-only audit) plus `zotero-skills` (for CRUD).
+description: Operate an installed research-hub CLI for source ingest, Zotero/Obsidian/NotebookLM workflows, cluster inspection, and vault maintenance. Use when the user explicitly asks to run a research-hub workflow or work in a repository configured for it. First verify the CLI and project configuration; otherwise explain the missing prerequisite instead of simulating success.
 ---
 
 # research-hub

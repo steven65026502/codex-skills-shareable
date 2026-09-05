@@ -2,6 +2,8 @@
 
 這是給其他 Windows 使用者使用的去識別化技能包，共有 41 個 Agent Skills。內容不含原使用者的姓名、電腦路徑、帳號、私人倉庫、專案資料、憑證、瀏覽器登入狀態或 Codex 記憶。
 
+本倉庫只同步經過審閱的通用檔案，不會直接複製整個本機 Skills 目錄。後續維護必須遵守 [`.github-maintainer.yml`](.github-maintainer.yml) 的公開版、去識別化與驗證規則。
+
 ## VS Code 卡在「開啟檔案／建立專案」時
 
 這是 VS Code 尚未開啟資料夾的正常歡迎畫面，不用建立新檔案或新專案。
@@ -57,6 +59,8 @@ Obsidian API key、base URL、GitHub 帳號與倉庫，以及 Cowart、GitHub、
 - `issue-ledger`：保留證據式問題帳本流程，專案範例已改成通用內容。
 - `github-maintainer`：保留一般 GitHub 倉庫維護、安全檢查與交接流程。
 - `obsidian-github-backup`：不再預設任何 Vault 路徑或 GitHub 倉庫，使用時必須自行輸入。
+- 長流程技能改用精簡入口與按需參考文件；小任務不再被迫執行完整流程。
+- 會操作外部服務的技能先檢查工具、登入與權限；缺少前提時明確停止，不模擬成功。
 
 ## 安全與相容性
 

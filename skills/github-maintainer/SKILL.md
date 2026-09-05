@@ -7,6 +7,12 @@ description: Maintain GitHub repositories with an industry-style workflow. Use w
 
 Use this skill for repository maintenance work where the goal is a clean, explainable GitHub history rather than only making code changes.
 
+## Choose the smallest path
+
+- Quick edit: for one README link, typo, badge, or small metadata change, read the target file plus applicable project instructions, inspect `git status -sb`, make the edit, run `git diff --check`, and verify only affected links. Do not require the full maintenance workflow.
+- Full maintenance: use the workflow below for repository reorganization, broad documentation changes, cleanup, release preparation, or handoff work.
+- Audit only: inspect and report; do not edit, delete, commit, push, or open a PR unless the user requested those actions.
+
 ## Core Workflow
 
 1. Read project context.

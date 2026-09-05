@@ -1,5 +1,7 @@
 # NotebookLM Skill API Reference
 
+> Paths are skill-relative. Any upstream `~/.claude/skills/notebooklm` example means the current installed skill directory.
+
 Complete API documentation for all NotebookLM skill modules.
 
 ## Important: Always Use run.py Wrapper

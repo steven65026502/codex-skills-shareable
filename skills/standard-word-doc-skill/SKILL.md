@@ -1,12 +1,6 @@
 ---
 name: standard-word-doc
-description: >
-  Use when a Word/.docx document must be generated, converted, standardized,
-  audited, or repaired; when Markdown, LLMWiki, API design, implementation
-  plans, reports, or formal Chinese materials need reliable Word formatting;
-  or when headings, bullets, tables, fonts, spacing, page numbers, WPS/Google
-  Docs compatibility, or "word排版乱了/格式不对/转docx/fix word formatting"
-  quality matters.
+description: Apply or repair this skill's standard Chinese Word document house style, including headings, lists, tables, fonts, spacing, and page numbers. Use only when the user asks for standardized Word formatting or this house format; use docx-win for general native Word work and docx-template-translator for a supplied template.
 ---
 
 # Standard Word Doc Skill

@@ -2,6 +2,8 @@
 
 # NotebookLM Claude Code Skill
 
+> Portability note: this upstream README contains Claude Code installation examples. In Codex or another host, resolve paths from the installed skill directory and use `scripts/run.py`; do not copy literal `~/.claude` paths.
+
 **Let [Claude Code](https://github.com/anthropics/claude-code) chat directly with NotebookLM for source-grounded answers based exclusively on your uploaded documents**
 
 [![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/)

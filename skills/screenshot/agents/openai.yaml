@@ -1,6 +1,6 @@
 interface:
   display_name: "Screenshot Capture"
-  short_description: "Capture screenshots"
+  short_description: "Capture desktop and application screenshots"
   icon_small: "./assets/screenshot-small.svg"
   icon_large: "./assets/screenshot.png"
-  default_prompt: "Capture the right screenshot for this task (target, area, and output path)."
+  default_prompt: "Use $screenshot to capture the right screenshot for this task, including the target, area, and output path."

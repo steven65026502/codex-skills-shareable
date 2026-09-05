@@ -1,6 +1,6 @@
 ---
 name: docx-win
-description: native microsoft word automation for windows .docx workflows. use when chatgpt or codex is running on windows with microsoft word installed and needs to create, edit, review, convert, or verify word documents through word com automation. trigger for .docx or .doc requests, professional word deliverables, no-template document polish, tracked changes, comments, find and replace, table of contents, headers and footers, page numbering, layout-sensitive edits, or exporting a word document to pdf for review. prefer this skill over libreoffice-based document workflows when word is available.
+description: Use native Microsoft Word COM on Windows for layout-sensitive DOCX work, tracked changes, comments, fields, tables of contents, headers, pagination, PDF export, and visual verification. Prefer this over cross-platform DOCX tooling when Word is installed and fidelity matters; use doc for simpler cross-platform work.
 ---
 
 # DOCX Win

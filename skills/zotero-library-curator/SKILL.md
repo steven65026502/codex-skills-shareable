@@ -1,8 +1,6 @@
 ---
 name: zotero-library-curator
-description: Audit and curate a Zotero library — find duplicate DOIs, orphan items missing required tags, propose collection rebinds, generate tag hygiene reports, emit preview-only cleanup plans. Use when the user asks to "audit Zotero", "find duplicates", "tag hygiene report", or "propose a Zotero cleanup plan". Defers all CRUD operations to the standalone `zotero-skills` skill or `research-hub zotero` CLI.
-metadata:
-  compatibility: "Portable across agentskills.io-compliant hosts; requires zotero-skills or the research-hub CLI for Zotero connectivity."
+description: Produce a read-only Zotero cleanup audit for duplicate DOIs, missing tags, collection placement, and tag hygiene. Use only when the user explicitly asks for a Zotero audit or preview cleanup plan. Never perform CRUD; hand approved changes to zotero-skills and report when Zotero connectivity is unavailable.
 ---
 
 # zotero-library-curator
@@ -26,17 +24,14 @@ two modes:
 1. **Read-only audit / preview** — needs **either** `zotero-skills`
    (Zotero local API) **or** the `research-hub zotero` CLI to
    inspect items.
-2. **Apply cleanup** — must defer to `zotero-skills` or
-   `research-hub zotero ... --apply`.
+2. **Apply cleanup** — out of scope for this skill; hand the approved plan to
+   `zotero-skills` in a separate mutating task.
 
-Before running, verify at least one is present. The `zotero-skills` check is host-dependent — adapt to your agent's skills directory:
+Before running, verify at least one read path is callable in the current host:
 
 ```bash
 research-hub doctor 2>/dev/null  # if research-hub CLI installed
-# Check whether the zotero-skills sibling skill is installed.
-# Claude Code:  ls ~/.claude/skills/zotero-skills/SKILL.md
-# Hermes:       ls ~/.hermes/skills/research/zotero-skills/SKILL.md
-# Other hosts:  ls <host-skills-dir>/zotero-skills/SKILL.md
+# Also check the current host's registered skills for zotero-skills.
 ```
 
 If **neither** is available, the user installed only the marketplace
@@ -47,9 +42,7 @@ skill. Stop and tell them:
 > via one of:
 >
 > - The standalone `zotero-skills` skill (handles Zotero local API).
->   Install via your host's skill installer (e.g. on Claude Code,
->   `git clone https://github.com/WenyuChiou/zotero-skills ~/.claude/skills/zotero-skills`;
->   on Hermes, `hermes skills install https://raw.githubusercontent.com/WenyuChiou/zotero-skills/master/SKILL.md`).
+>   Install it through the current host's supported skill installer if absent.
 > - **Or** the `research-hub` CLI: `pip install research-hub-pipeline`
 >
 > Either path needs Zotero configured (local API on port 23119, or

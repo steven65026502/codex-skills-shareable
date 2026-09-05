@@ -1,6 +1,6 @@
 ---
 name: figma-generate-design
-description: "Use this skill alongside figma-use when the task involves translating an application page, view, or multi-section layout into Figma. Triggers: 'write to Figma', 'create in Figma from code', 'push page to Figma', 'take this app/page and build it in Figma', 'create a screen', 'build a landing page in Figma', 'update the Figma screen to match code'. This is the preferred workflow skill whenever the user wants to build or update a full page, screen, or view in Figma from code or a description. Discovers design system components, variables, and styles via search_design_system, imports them, and assembles screens incrementally section-by-section using design system tokens instead of hardcoded values."
+description: "Create or update a full application screen in Figma from code or a description by reusing available design-system components, variables, and styles. Use only when the user wants a Figma canvas deliverable and both figma-use and the required Figma tools are callable; otherwise report the missing prerequisite."
 ---
 
 # Build / Update Screens from Design System
@@ -16,7 +16,7 @@ Use this skill to create or update full-page screens in Figma by **reusing the p
 - Use this skill when the deliverable is a **Figma screen** (new or updated) composed of design system component instances.
 - If the user wants to generate **code from a Figma design**, switch to [figma-implement-design](../figma-implement-design/SKILL.md).
 - If the user wants to create **new reusable components or variants**, use [figma-use](../figma-use/SKILL.md) directly.
-- If the user wants to write **Code Connect mappings**, switch to [figma-code-connect-components](../figma-code-connect-components/SKILL.md).
+- If the user wants only **Code Connect mappings**, first verify a Code Connect-capable tool or skill is installed. This bundle has no dedicated Code Connect skill; do not route to a missing file.
 
 ## Prerequisites
 
@@ -27,9 +27,9 @@ Use this skill to create or update full-page screens in Figma by **reusing the p
   - Or context about which file to target (the agent can discover pages)
 - Source code or description of the screen to build/update
 
-## Parallel Workflow with generate_figma_design (Web Apps Only)
+## Optional parallel workflow with generate_figma_design
 
-When building a screen from a **web app** that can be rendered in a browser, the best results come from running both approaches in parallel:
+For a web app that can be rendered in a browser, use this comparison only when both tool paths are available and visual cross-checking materially helps. It is not required for a small screen edit:
 
 1. **In parallel:**
    - Start building the screen using this skill's workflow (use_figma + design system components)

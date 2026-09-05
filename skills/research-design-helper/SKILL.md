@@ -1,6 +1,6 @@
 ---
 name: research-design-helper
-description: Guide a researcher through 5 Socratic segments — research question sharpening, expected mechanism, identifiability check, validation plan, risk register — and produce `.research/design_brief.md`. Use when the user asks to "frame this research question", "design my study", "help me think through what model to build", "sharpen my hypothesis", or "before I start coding, walk me through the design". Does NOT write the model spec; does NOT invent the research question — guides the human to articulate them.
+description: Run a guided five-part study-design interview and write .research/design_brief.md. Use only when the user explicitly asks for a Socratic design session, a design brief, or to be walked through research framing. For a simple research-method question, answer directly without forcing the interview or writing files.
 ---
 
 # research-design-helper

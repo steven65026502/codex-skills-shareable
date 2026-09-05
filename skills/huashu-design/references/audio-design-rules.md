@@ -256,5 +256,5 @@ ffmpeg -y -i video.mp4 -i sfx-track.mp3 -i bgm.mp3 \
 
 - SFX 资产清单：`sfx-library.md`
 - 视觉风格参考：`apple-gallery-showcase.md`
-- Anthropic 三支片子深度音频分析：`/Users/alchain/Documents/写作/01-公众号写作/项目/2026.04-huashu-design发布/参考动画/AUDIO-BEST-PRACTICES.md`
-- huashu-design v9 实战案例：`/Users/alchain/Documents/写作/01-公众号写作/项目/2026.04-huashu-design发布/配图/hero-animation-v9-final.mp4`
+- 原作者的外部音频分析与本地 v9 影片未随技能提供，不能作为运行前提。
+- 可改用本技能内的 `hero-animation-case-study.md` 与 `sfx-library.md`；需要听觉验证时必须使用实际可访问的音档。

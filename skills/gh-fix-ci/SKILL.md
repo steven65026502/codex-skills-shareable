@@ -1,6 +1,6 @@
 ---
 name: "gh-fix-ci"
-description: "Use when a user asks to debug or fix failing GitHub PR checks that run in GitHub Actions; use `gh` to inspect checks and logs, summarize failure context, draft a fix plan, and implement only after explicit approval. Treat external providers (for example Buildkite) as out of scope and report only the details URL."
+description: "Use when a user asks to diagnose or fix failing GitHub PR checks that run in GitHub Actions. Inspect checks and logs with gh and report evidence. If the user asked only for diagnosis, stop before edits; if they explicitly asked to fix, implement the focused repair without a redundant approval round. External providers remain out of scope."
 ---
 
 
@@ -8,8 +8,7 @@ description: "Use when a user asks to debug or fix failing GitHub PR checks that
 
 ## Overview
 
-Use gh to locate failing PR checks, fetch GitHub Actions logs for actionable failures, summarize the failure snippet, then propose a fix plan and implement after explicit approval.
-- If a plan-oriented skill (for example `create-plan`) is available, use it; otherwise draft a concise plan inline and request approval before implementing.
+Use gh to locate failing PR checks, fetch GitHub Actions logs for actionable failures, and summarize the evidence. Authorization follows the request: diagnosis/review requests are read-only; an explicit request to fix authorizes the focused code change and proportional verification.
 
 Prereq: authenticate with the standard GitHub CLI once (for example, run `gh auth login`), then confirm with `gh auth status` (repo + workflow scopes are typically required).
 
@@ -50,10 +49,11 @@ Prereq: authenticate with the standard GitHub CLI once (for example, run `gh aut
 5. Summarize failures for the user.
    - Provide the failing check name, run URL (if any), and a concise log snippet.
    - Call out missing logs explicitly.
-6. Create a plan.
-   - Use the `create-plan` skill to draft a concise plan and request approval.
-7. Implement after approval.
-   - Apply the approved plan, summarize diffs/tests, and ask about opening a PR.
+6. Decide at the authorization boundary.
+   - Diagnosis-only request: report the cause and a focused repair, then stop before edits.
+   - Explicit fix request: state the focused repair and implement it; do not ask for the same approval again.
+7. Verify the repair.
+   - Run the relevant local test or check, summarize the diff, and do not open or merge a PR unless requested.
 8. Recheck status.
    - After changes, suggest re-running the relevant tests and `gh pr checks` to confirm.
 

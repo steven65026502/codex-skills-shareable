@@ -1,5 +1,7 @@
 # Humanizer-zh-TW: AI 寫作人性化工具（繁體中文版）
 
+> 安裝路徑範例沿用上游 Claude Code 文件；在 Codex 或其他 host 請改用該環境的 skills 目錄。實際觸發範圍與完成條件以根目錄 `SKILL.md` 為準。
+
 > **聲明：**
 >
 > - 本專案由 [op7418/Humanizer-zh](https://github.com/op7418/Humanizer-zh) 繁體化而來

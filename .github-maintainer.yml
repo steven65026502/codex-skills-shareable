@@ -1,0 +1,58 @@
+default_branch: main
+push_policy: direct-to-main-after-explicit-user-request
+
+protected_paths:
+  - README.md
+  - THIRD_PARTY_NOTICE.md
+  - inventory/SKILLS.md
+  - inventory/VALIDATION.md
+  - installers/install-skills.ps1
+  - mcp/config.example.toml
+
+docs:
+  readme: README.md
+  inventory: inventory/SKILLS.md
+  validation: inventory/VALIDATION.md
+  third_party_notice: THIRD_PARTY_NOTICE.md
+
+generated_do_not_commit:
+  - "**/.venv/**"
+  - "**/browser_state/**"
+  - "**/auth_info.json"
+  - "**/cookies.json"
+  - "**/.pytest_cache/**"
+  - "**/__pycache__/**"
+  - "**/*.pyc"
+  - "**/.coverage"
+  - "**/*.log"
+
+cleanup_safe:
+  - "**/.pytest_cache/"
+  - "**/__pycache__/"
+  - "**/*.pyc"
+  - "**/.coverage"
+
+publication:
+  purpose: portable-sanitized-codex-skills
+  preserve_skill_licenses: true
+  require_upstream_commit_for_vendored_resources: true
+  do_not_add_skills_without_explicit_scope: true
+  forbidden_content:
+    - personal names or usernames
+    - personal absolute filesystem paths
+    - private repository or project names
+    - credentials, tokens, cookies, OAuth state, or browser profiles
+    - Codex sessions, memory, local backups, or application caches
+  synchronization_rules:
+    - copy only reviewed files, never an entire local skills home
+    - convert machine-specific paths into skill-relative or placeholder paths
+    - keep examples generic and remove private defaults
+    - scan staged and untracked files before every commit
+
+verify:
+  - git diff --check
+  - validate every skills/*/SKILL.md with a UTF-8-aware validator
+  - validate agents/openai.yaml structure and default prompts
+  - check local Markdown links
+  - scan for personal identifiers, absolute paths, and credential patterns
+  - preview installers/install-skills.ps1 with -WhatIf

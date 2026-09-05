@@ -1,6 +1,6 @@
 ---
 name: design-system
-description: Token architecture, component specifications, and slide generation. Three-layer tokens (primitive→semantic→component), CSS variables, spacing/typography scales, component specs, strategic slide creation. Use for design tokens, systematic design, brand-compliant presentations.
+description: Create or review design-token architecture and component specifications. Use for primitive-to-semantic-to-component tokens, CSS variables, spacing and typography scales, component states, and theme contracts. Do not use for general slide creation or one-off UI styling.
 license: MIT
 metadata:
   author: claudekit
@@ -9,235 +9,35 @@ metadata:
 
 # Design System
 
-Token architecture, component specifications, systematic design, slide generation.
+Create a coherent token and component contract that can be implemented across themes and platforms. Keep project requirements and existing public APIs authoritative.
 
-## When to Use
+## Use when
 
-- Design token creation
-- Component state definitions
-- CSS variable systems
-- Spacing/typography scales
-- Design-to-code handoff
-- Tailwind theme configuration
-- **Slide/presentation generation**
+- defining or migrating primitive, semantic, and component tokens;
+- specifying component anatomy, variants, states, and accessibility behavior;
+- mapping tokens into CSS variables or Tailwind configuration;
+- reviewing hardcoded values, aliases, naming, or theme coverage.
 
-## Token Architecture
+Do not use for a one-off CSS change, general art direction, poster design, or slide authoring. Use `ui-styling` for shadcn/Tailwind component implementation and `slides` for a PPTX deliverable.
 
-Load: `references/token-architecture.md`
+## Route to detail
 
-### Three-Layer Structure
+- Token layers and naming: `references/token-architecture.md`
+- Primitive values: `references/primitive-tokens.md`
+- Semantic roles and themes: `references/semantic-tokens.md`
+- Component tokens and specifications: `references/component-tokens.md`, `references/component-specs.md`
+- States and variants: `references/states-and-variants.md`
+- Tailwind mapping: `references/tailwind-integration.md`
+- Preserved legacy material, including optional slide-token tooling: `references/full-guide.md`; read only when maintaining those existing assets.
 
-```
-Primitive (raw values)
-       ↓
-Semantic (purpose aliases)
-       ↓
-Component (component-specific)
-```
+## Workflow
 
-**Example:**
-```css
-/* Primitive */
---color-blue-600: #2563EB;
+1. Inspect the repository's existing tokens, component APIs, themes, and naming conventions.
+2. Define the smallest missing layer. Prefer aliases over duplicated literal values.
+3. Specify component states, contrast intent, and fallback behavior before generating code.
+4. Update only the requested formats and consumers; do not introduce a parallel token source of truth.
+5. Run available token validation, build, and targeted component checks.
 
-/* Semantic */
---color-primary: var(--color-blue-600);
+## Completion and failure
 
-/* Component */
---button-bg: var(--color-primary);
-```
-
-## Quick Start
-
-**Generate tokens:**
-```bash
-node scripts/generate-tokens.cjs --config tokens.json -o tokens.css
-```
-
-**Validate usage:**
-```bash
-node scripts/validate-tokens.cjs --dir src/
-```
-
-## References
-
-| Topic | File |
-|-------|------|
-| Token Architecture | `references/token-architecture.md` |
-| Primitive Tokens | `references/primitive-tokens.md` |
-| Semantic Tokens | `references/semantic-tokens.md` |
-| Component Tokens | `references/component-tokens.md` |
-| Component Specs | `references/component-specs.md` |
-| States & Variants | `references/states-and-variants.md` |
-| Tailwind Integration | `references/tailwind-integration.md` |
-
-## Component Spec Pattern
-
-| Property | Default | Hover | Active | Disabled |
-|----------|---------|-------|--------|----------|
-| Background | primary | primary-dark | primary-darker | muted |
-| Text | white | white | white | muted-fg |
-| Border | none | none | none | muted-border |
-| Shadow | sm | md | none | none |
-
-## Scripts
-
-| Script | Purpose |
-|--------|---------|
-| `generate-tokens.cjs` | Generate CSS from JSON token config |
-| `validate-tokens.cjs` | Check for hardcoded values in code |
-| `search-slides.py` | BM25 search + contextual recommendations |
-| `slide-token-validator.py` | Validate slide HTML for token compliance |
-| `fetch-background.py` | Fetch images from Pexels/Unsplash |
-
-## Templates
-
-| Template | Purpose |
-|----------|---------|
-| `design-tokens-starter.json` | Starter JSON with three-layer structure |
-
-## Integration
-
-**With brand:** Extract primitives from brand colors/typography
-**With ui-styling:** Component tokens → Tailwind config
-
-**Skill Dependencies:** brand, ui-styling
-**Primary Agents:** ui-ux-designer, frontend-developer
-
-## Slide System
-
-Brand-compliant presentations using design tokens + Chart.js + contextual decision system.
-
-### Source of Truth
-
-| File | Purpose |
-|------|---------|
-| `docs/brand-guidelines.md` | Brand identity, voice, colors |
-| `assets/design-tokens.json` | Token definitions (primitive→semantic→component) |
-| `assets/design-tokens.css` | CSS variables (import in slides) |
-| `assets/css/slide-animations.css` | CSS animation library |
-
-### Slide Search (BM25)
-
-```bash
-# Basic search (auto-detect domain)
-python scripts/search-slides.py "investor pitch"
-
-# Domain-specific search
-python scripts/search-slides.py "problem agitation" -d copy
-python scripts/search-slides.py "revenue growth" -d chart
-
-# Contextual search (Premium System)
-python scripts/search-slides.py "problem slide" --context --position 2 --total 9
-python scripts/search-slides.py "cta" --context --position 9 --prev-emotion frustration
-```
-
-### Decision System CSVs
-
-| File | Purpose |
-|------|---------|
-| `data/slide-strategies.csv` | 15 deck structures + emotion arcs + sparkline beats |
-| `data/slide-layouts.csv` | 25 layouts + component variants + animations |
-| `data/slide-layout-logic.csv` | Goal → Layout + break_pattern flag |
-| `data/slide-typography.csv` | Content type → Typography scale |
-| `data/slide-color-logic.csv` | Emotion → Color treatment |
-| `data/slide-backgrounds.csv` | Slide type → Image category (Pexels/Unsplash) |
-| `data/slide-copy.csv` | 25 copywriting formulas (PAS, AIDA, FAB) |
-| `data/slide-charts.csv` | 25 chart types with Chart.js config |
-
-### Contextual Decision Flow
-
-```
-1. Parse goal/context
-        ↓
-2. Search slide-strategies.csv → Get strategy + emotion beats
-        ↓
-3. For each slide:
-   a. Query slide-layout-logic.csv → layout + break_pattern
-   b. Query slide-typography.csv → type scale
-   c. Query slide-color-logic.csv → color treatment
-   d. Query slide-backgrounds.csv → image if needed
-   e. Apply animation class from slide-animations.css
-        ↓
-4. Generate HTML with design tokens
-        ↓
-5. Validate with slide-token-validator.py
-```
-
-### Pattern Breaking (Duarte Sparkline)
-
-Premium decks alternate between emotions for engagement:
-```
-"What Is" (frustration) ↔ "What Could Be" (hope)
-```
-
-System calculates pattern breaks at 1/3 and 2/3 positions.
-
-### Slide Requirements
-
-**ALL slides MUST:**
-1. Import `assets/design-tokens.css` - single source of truth
-2. Use CSS variables: `var(--color-primary)`, `var(--slide-bg)`, etc.
-3. Use Chart.js for charts (NOT CSS-only bars)
-4. Include navigation (keyboard arrows, click, progress bar)
-5. Center align content
-6. Focus on persuasion/conversion
-
-### Chart.js Integration
-
-```html
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-
-<canvas id="revenueChart"></canvas>
-<script>
-new Chart(document.getElementById('revenueChart'), {
-    type: 'line',
-    data: {
-        labels: ['Sep', 'Oct', 'Nov', 'Dec'],
-        datasets: [{
-            data: [5, 12, 28, 45],
-            borderColor: '#FF6B6B',  // Use brand coral
-            backgroundColor: 'rgba(255, 107, 107, 0.1)',
-            fill: true,
-            tension: 0.4
-        }]
-    }
-});
-</script>
-```
-
-### Token Compliance
-
-```css
-/* CORRECT - uses token */
-background: var(--slide-bg);
-color: var(--color-primary);
-font-family: var(--typography-font-heading);
-
-/* WRONG - hardcoded */
-background: #0D0D0D;
-color: #FF6B6B;
-font-family: 'Space Grotesk';
-```
-
-### Reference Implementation
-
-Working example with all features:
-```
-assets/designs/slides/claudekit-pitch-251223.html
-```
-
-### Command
-
-```bash
-/slides:create "10-slide investor pitch for ClaudeKit Marketing"
-```
-
-## Best Practices
-
-1. Never use raw hex in components - always reference tokens
-2. Semantic layer enables theme switching (light/dark)
-3. Component tokens enable per-component customization
-4. Use HSL format for opacity control
-5. Document every token's purpose
-6. **Slides must import design-tokens.css and use var() exclusively**
+Complete only when token references resolve, required themes and component states are represented, generated files parse or build, and the diff contains no unrelated hardcoded-value migration. If an existing token source or consumer mapping is ambiguous, preserve it, document the conflict, and stop before a breaking rename. Do not claim brand compliance or accessibility without the corresponding source and checks.

@@ -9,6 +9,8 @@ This repository is a sanitized installation mirror assembled from skills with di
 - `huashu-design` is derived from [`alchaincyf/huashu-design`](https://github.com/alchaincyf/huashu-design) and is governed by its included Personal Use License. Personal and non-commercial use is permitted under its terms; company, client-delivery, and other commercial uses require prior authorization from the author.
 - The Figma skill files are governed by the Figma Developer Terms referenced in their included `LICENSE.txt` or `LICENSE.TXT` files.
 - Apache-2.0 and MIT license texts are retained wherever supplied by the upstream package.
+- `ui-ux-pro-max` runtime data and scripts are synchronized from `nextlevelbuilder/ui-ux-pro-max-skill` commit `f3ac195224eac1eb0dfe1a3059c2a6add78ffbe3` under its included MIT license.
+- `zotero-skills` supporting scripts and references are synchronized from `WenyuChiou/zotero-skills` commit `62eec4c42ebc0ec4f5eca523ca5f0cc688c64bf2` and retain its MIT license; this mirror changes credential loading to environment variables only.
 - Plugin caches are intentionally excluded. Install plugins from their supported marketplace or original source.
 - This repository does not claim ownership of third-party skill content, names, templates, or assets.
 

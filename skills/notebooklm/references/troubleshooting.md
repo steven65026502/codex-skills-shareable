@@ -1,5 +1,7 @@
 # NotebookLM Skill Troubleshooting Guide
 
+> Some upstream examples below use `~/.claude/skills/notebooklm`. Replace that prefix with the actual installed skill directory before running a command. Preview backups and deletions against the resolved path first.
+
 ## Quick Fix Table
 
 | Error | Solution |

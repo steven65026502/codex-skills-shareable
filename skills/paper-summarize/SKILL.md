@@ -1,107 +1,57 @@
 ---
 name: paper-summarize
-description: After research-hub ingests a cluster of cited papers, fill the per-paper Key Findings + Methodology + Relevance sections in BOTH Obsidian markdown and the Zotero child note. Use when the user says "fill the TODO Key Findings/Methodology blocks left by research-hub auto", "I just ran auto and don't know what these papers are about", or "summarize the papers in cluster X". Invokes `claude` / `codex` / `gemini` (whichever is on PATH) on each paper's abstract. NOT for summarizing the user's own manuscript draft — that's `paper-memory-builder`. NOT for cluster-level briefs — that's `research-hub notebooklm generate`. This skill is per-cited-paper only.
+description: Fill per-paper Key Findings, Methodology, and Relevance sections in both Obsidian Markdown and Zotero notes after research-hub ingest. Use only for an existing configured cluster when the user requests per-paper summaries. Verify the CLI, model delegate, source abstract, and both write targets first; stop and report partial failures without claiming atomic success.
 ---
 
-# paper-summarize
+# Paper Summarize
 
-The `auto` pipeline ingests metadata + abstract only — Summary / Key Findings / Methodology / Relevance stay as `[TODO]` skeletons in both Obsidian and Zotero. Cluster-level summarization (NotebookLM brief, crystals) does NOT fill per-paper notes. So after `auto`, the user has nothing scannable per paper without opening the PDF.
+Fill the existing per-paper summary sections created by research-hub. This is for cited papers in an existing cluster, not the user's manuscript and not a cluster-level brief.
 
-This skill fills that gap. One LLM call per paper, JSON-validated, written to both vault systems atomically (rollback the markdown change if Zotero write fails so the two stay in sync).
+## Prerequisites
 
-## When to use
+Before any processing:
 
-Trigger phrases:
+1. Run `research-hub doctor`.
+2. Verify the requested cluster exists under the configured vault.
+3. Verify the chosen `claude`, `codex`, or `gemini` CLI is callable if the installed research-hub version requires one.
+4. Confirm each target note has a source abstract and, for dual writes, a Zotero item key.
+5. Start with a dry run; `--apply` is required for writes.
 
-- "Summarize the papers in cluster X."
-- "Fill the TODO Key Findings for X."
-- "I just ran `auto X` and the notes are empty — give me real summaries."
-- "Update Zotero notes for cluster X with what each paper actually says."
+If the CLI or configuration is absent, stop. Do not reconstruct research-hub's private cache or claim MCP tools that are not available.
 
-Not for:
+## Scope
 
-- Generating a single CLUSTER-LEVEL summary — that's `research-hub notebooklm generate` (NotebookLM brief).
-- Filling Q&A on the cluster — that's `research-hub crystal emit/apply`.
-- Reading PDFs — abstract-only by design. PDF parsing is out of scope; the LLM is told to mark "[PDF needed]" if abstract is too thin.
-- Verifying brief vs source — that's `notebooklm-brief-verifier`.
+For each paper, produce only:
 
-## Inputs
+- `Key Findings`: three to five abstract-supported bullets;
+- `Methodology`: one concise abstract-supported statement;
+- `Relevance`: one or two sentences tied to the cluster topic.
 
-- Cluster slug (must already exist in the vault under `raw/<slug>/`)
-- Optional LLM CLI override (`claude` / `codex` / `gemini`)
-- Optional `--apply` flag (default off, dry-run)
+Preserve existing anchors and unrelated note content. If the abstract is empty or too thin, mark the field `[PDF needed]` rather than inferring from the title or metadata.
 
-The skill reads each paper's frontmatter (DOI, year, zotero-key) + the `## Abstract` body block. Papers with empty abstract get a "PDF needed" marker rather than hallucinated findings.
+## Commands
 
-## Outputs
+Inspect the installed command help before relying on flags:
 
-For each paper, three sections are rewritten:
-
-1. **Obsidian markdown** at `raw/<cluster>/<paper-slug>.md`:
-   - `## Key Findings` callout block (3–5 bullets)
-   - `## Methodology` callout block (one sentence)
-   - `## Relevance` callout block (1–2 sentences linking to the cluster topic)
-   - Anchor IDs (`^findings`, `^methodology`, `^relevance`) preserved.
-
-2. **Zotero child note** for the paper's parent item (looked up via `zotero-key` frontmatter):
-   - Existing note HTML overwritten with `<h1>Summary` + Abstract + Key Findings `<ul>` + Methodology + Relevance.
-   - If no child note exists, one is created.
-
-Both writes must succeed for a paper to count as "applied". A Zotero write failure rolls back the markdown change so the two systems stay in sync.
-
-## Failure modes
-
-- **No LLM CLI on PATH**: prompt is saved to `<vault>/.research_hub/artifacts/<cluster>/summarize-prompt.md`. The user pipes it through their LLM manually and re-runs with `--apply`, or calls the `apply_cluster_summaries` MCP tool with the parsed payload. Exit code 0; ok=True.
-- **LLM returns malformed JSON**: report is `ok=False` with `error="LLM response had no parseable JSON object"`. No writes.
-- **Paper slug in payload not in cluster**: that entry is skipped with reason logged; other entries still applied.
-- **Empty key_findings / methodology / relevance**: entry skipped.
-- **Zotero write fails for one paper**: that paper's markdown change is rolled back; other papers still applied.
-
-## Verification
-
-This skill's contract is exercised end-to-end by the test suite. The
-suites stub the LLM CLI but execute real Obsidian markdown writes against
-a fixture vault and real Zotero child-note writes against a mocked Zotero
-adapter. Rollback semantics (markdown rolls back if Zotero write fails)
-are explicitly tested.
-
-```bash
-# Run the full paper-summarize suite (23 tests)
-python -m pytest -q \
-  tests/test_v069_summarize.py \
-  tests/test_v073_parallel_summarize.py \
-  tests/test_v080_resummarize.py
-```
-
-Coverage breakdown:
-
-| Test file | Count | What it covers |
-|---|---|---|
-| `tests/test_v069_summarize.py` | 17 | Prompt builder shape, validator (rejects unknown slugs / empty fields / wrong types), Obsidian + Zotero apply path, rollback when Zotero fails, no-LLM-on-PATH fallback |
-| `tests/test_v073_parallel_summarize.py` | 3 | Parallel summarize across multiple clusters, ordering, error isolation |
-| `tests/test_v080_resummarize.py` | 3 | Re-summarize behaviour: idempotent on same input, overwrite on different LLM output, --no-zotero path |
-
-For a manual smoke check against a live vault:
-
-```bash
-# Dry-run (emit prompt + show LLM output, no writes)
+```powershell
+research-hub summarize --help
 research-hub summarize --cluster <slug>
-
-# Live run (writes to Obsidian + Zotero)
-research-hub summarize --cluster <slug> --apply
-
-# Override LLM
 research-hub summarize --cluster <slug> --llm-cli codex --apply
-
-# Obsidian-only (skip Zotero — useful when Zotero is offline)
-research-hub summarize --cluster <slug> --apply --no-zotero
 ```
 
-After applying, scan `raw/<cluster>/*.md` — every paper's `## Key Findings` callout should have real bullets instead of `[TODO]`.
+Use `--no-zotero` or `--no-obsidian` only when the user explicitly accepts a one-sided update. The exact available flags and test locations belong to the installed research-hub version, not this standalone skill.
 
-## Operating notes
+## Write contract
 
-- Findings-first: the prompt instructs the LLM to state the result, not "The paper shows that…".
-- Anchored to the abstract: every Key Finding must trace to something the abstract claims. The LLM is told to mark uncertain claims with `[likely]`.
-- Idempotent: re-running on a cluster with already-filled findings will overwrite them with whatever the LLM produces this run. Use `--no-zotero` or `--no-obsidian` if you want to preview one side first.
-- Same dual-write discipline as the abstract-sync helpers in `.scratch/`: one transactional unit per paper.
+1. Validate the model response as structured data before any write.
+2. Reject unknown paper slugs, empty required fields, and claims not traceable to the abstract.
+3. Treat the Markdown and Zotero update as one transaction per paper.
+4. After both writes, read both records back and confirm the anchors and sections match.
+5. If the Zotero write fails, restore that paper's prior Markdown.
+6. On any partial synchronization failure, stop the remaining batch and report papers already verified, rolled back, and not attempted. Do not blindly retry.
+
+## Completion and failure
+
+A paper counts as complete only when both requested targets are read back and match. A dry run is not an applied update. Report the cluster, model CLI, item counts, skipped papers, rollback results, and whether the run was dry or applied.
+
+When a compatible research-hub source checkout is available, run its current summarize tests and targeted live dry run. Do not claim a fixed test count or bundled test coverage from this skill: those test files are not included here.

@@ -5,7 +5,7 @@
 | # | 技能資料夾 | 主要用途 |
 |---:|---|---|
 | 1 | `academic-writing-skills` | 學術寫作、修訂、回覆審稿與證據稽核 |
-| 2 | `design-system` | 設計 Token、元件規格與品牌簡報 |
+| 2 | `design-system` | 設計 Token 架構、語意映射與元件規格 |
 | 3 | `doc` | 讀取、建立與檢查 DOCX |
 | 4 | `docx-template-translator` | 依 Word 範本轉換 LaTeX、PDF 或 Markdown |
 | 5 | `docx-win` | Windows Microsoft Word 自動化 |
@@ -15,7 +15,7 @@
 | 9 | `figma-implement-design` | 將 Figma 設計實作成前端程式碼 |
 | 10 | `figma-use` | Figma 寫入或程式化讀取的前置流程 |
 | 11 | `frontend-skill` | 網站、App、原型與視覺頁面設計 |
-| 12 | `gh-fix-ci` | 檢查 GitHub Actions 失敗原因 |
+| 12 | `gh-fix-ci` | 診斷或修正 GitHub Actions 失敗 |
 | 13 | `github-maintainer` | GitHub 倉庫整理、維護與安全交接 |
 | 14 | `huashu-design` | HTML 高保真原型、動畫與設計評審 |
 | 15 | `humanizer-zh-tw` | 將繁體中文改得自然並移除 AI 文風 |
@@ -41,7 +41,7 @@
 | 35 | `spreadsheet` | 建立、分析與格式化試算表 |
 | 36 | `standard-word-doc-skill` | 標準化、修復與排版 Word 文件 |
 | 37 | `transcribe` | 音訊或影片語音轉文字 |
-| 38 | `ui-styling` | Tailwind、shadcn/ui 與無障礙介面設計 |
+| 38 | `ui-styling` | Tailwind、shadcn/ui 與無障礙介面實作 |
 | 39 | `ui-ux-pro-max` | Web 與行動裝置 UI/UX 設計知識庫 |
 | 40 | `zotero-library-curator` | 唯讀稽核 Zotero 重複項目與標籤品質 |
 | 41 | `zotero-skills` | Zotero 項目、筆記、標籤與附件 CRUD |

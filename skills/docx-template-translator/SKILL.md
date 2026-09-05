@@ -1,6 +1,6 @@
 ---
 name: docx-template-translator
-description: Adaptive conversion of LaTeX, PDF, or Markdown sources into a complete Word .docx that follows a user-supplied .docx template. Use when pandoc --reference-doc alone is not enough — for thesis, dissertation, report, or institutional Word formatting that needs cover pages, declarations, TOC, heading numbering, captions, three-line tables, equations, citations, and visual verification.
+description: Convert LaTeX, PDF, or Markdown into a complete Word document that follows a user-supplied DOCX template. Use for thesis, dissertation, report, or institutional templates whose cover pages, declarations, numbering, captions, equations, citations, and layout require project-specific conversion and visual verification.
 ---
 
 # DOCX Template Translator

@@ -1,11 +1,13 @@
 ---
 name: figma-use
-description: "**MANDATORY prerequisite** — you MUST invoke this skill BEFORE every `use_figma` tool call. NEVER call `use_figma` directly without loading this skill first. Skipping it causes common, hard-to-debug failures. Trigger whenever the user wants to perform a write action or a unique read action that requires JavaScript execution in the Figma file context — e.g. create/edit/delete nodes, set up variables or tokens, build components and variants, modify auto-layout or fills, bind variables to properties, or inspect file structure programmatically."
+description: "Required safety and API rules for every available use_figma tool call. Use when the user requests programmatic Figma node, variable, component, layout, style, or file-context operations and use_figma is actually callable. If the tool or target file is unavailable, report the prerequisite instead of simulating a canvas change."
 ---
 
 # use_figma — Figma Plugin API Skill
 
 Use `use_figma` MCP to execute JavaScript in Figma files via the Plugin API. All detailed reference docs live in `references/`.
+
+First verify that `use_figma` is callable and the target file can be reached. If not, stop the Figma mutation path and report the missing connection or permission; do not describe a write as completed. Once available, this skill is mandatory before every `use_figma` call.
 
 **Always pass `skillNames: "figma-use"` when calling `use_figma`.** This is a logging parameter used to track skill usage — it does not affect execution.
 

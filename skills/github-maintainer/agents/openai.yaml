@@ -1,4 +1,4 @@
 interface:
   display_name: "GitHub Maintainer"
   short_description: "Maintain clean GitHub repositories"
-  default_prompt: "Inspect this repository with the maintainer profile, update documentation if needed, run hygiene checks, and prepare a clean commit."
+  default_prompt: "Use $github-maintainer to inspect this repository, make the requested maintenance changes, run proportional hygiene checks, and prepare a clean handoff."

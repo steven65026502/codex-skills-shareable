@@ -1,6 +1,6 @@
 ---
 name: paper-memory-builder
-description: Convert a paper draft + figures + Zotero metadata into reusable .paper/claims.yml and .paper/figures.yml files so the academic-writing-skills skill can do writing, revision, and audit passes without re-reading the manuscript every time. Use when the user asks to "build paper memory", "extract claims from this manuscript", or "prepare this paper for AI-assisted writing". NOT for summarizing cited papers in a literature cluster — that's `paper-summarize`. This skill is for the user's own manuscript draft only.
+description: Convert the user's manuscript draft, figures, and available Zotero metadata into .paper/claims.yml and .paper/figures.yml for later writing and audit work. Use when the user explicitly asks to build paper memory or extract claims. Do not edit the manuscript, invent missing evidence, or use this for cited-paper cluster summaries.
 ---
 
 # paper-memory-builder
@@ -90,6 +90,12 @@ Do **not** touch `journal_format.md`, `reviewer_comments.md`, or `style_override
 - Don't write to `.research/` — that's the workspace layer, not the
   paper layer.
 - Don't extract claims from cited works — only from THIS paper.
+
+## Completion and failure handling
+
+Before completion, parse every YAML output and validate it against `references/yaml-schemas.md` and `references/revision_history_schema.md`. Claim and figure IDs must be unique; evidence and figure paths must either exist or be explicitly marked unresolved. Compare the manuscript's figure references with `figures.yml` and report count mismatches. Preserve existing human-edited records by stable ID and inspect the diff to confirm that the manuscript and `.research/` were not changed.
+
+If the manuscript cannot be read, a schema is missing, YAML is invalid, or source attribution is ambiguous, do not publish partial files as complete. Leave prior valid files in place, write no invented placeholders, and report the exact source or record that blocked completion. If only one output validates, keep it as a labeled partial artifact only when doing so cannot overwrite a previous valid file.
 
 ## See also
 

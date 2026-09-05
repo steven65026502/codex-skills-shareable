@@ -1,6 +1,6 @@
 ---
 name: "doc"
-description: "Use when the task involves reading, creating, or editing `.docx` documents, especially when formatting or layout fidelity matters; prefer `python-docx` plus the bundled `scripts/render_docx.py` for visual checks."
+description: "Cross-platform DOCX reading, creation, and editing with python-docx and rendered visual checks. Use when native Microsoft Word automation is unavailable or unnecessary. On Windows, prefer docx-win for layout-sensitive edits, tracked changes, fields, or Word-to-PDF verification."
 ---
 
 

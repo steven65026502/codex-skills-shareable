@@ -1,3 +1,4 @@
-display_name: Obsidian GitHub Backup
-short_description: Back up Obsidian to private GitHub.
-default_prompt: Back up my Obsidian vault to GitHub.
+interface:
+  display_name: "Obsidian GitHub Backup"
+  short_description: "Back up an Obsidian vault to private GitHub"
+  default_prompt: "Use $obsidian-github-backup to back up my Obsidian vault to a verified private GitHub repository with secret checks."

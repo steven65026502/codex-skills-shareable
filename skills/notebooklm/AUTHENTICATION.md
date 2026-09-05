@@ -98,7 +98,7 @@ with open("state.json", 'r') as f:
 ## File Structure
 
 ```
-~/.claude/skills/notebooklm/data/
+<installed-skill-directory>/data/
 ├── auth_info.json              # Metadata about authentication
 ├── browser_state/
 │   ├── state.json             # Cookies + localStorage (for manual injection)

@@ -84,8 +84,8 @@ scratch".
 
 ## Schema reference
 
-Full schema lives in
-[docs/research-workspace-manifest.md](../../docs/research-workspace-manifest.md).
+The local schema and validation rules live in
+[references/research-workspace-manifest.md](references/research-workspace-manifest.md).
 Quick reminder of `project_manifest.yml` required fields:
 
 - `project_name`
@@ -131,6 +131,18 @@ After writing the files, print a 5-line summary:
   `.research/open_questions.md` instead.
 - Don't overclaim: if the project has no clear research question yet, leave
   `research_question` empty and add a question to `open_questions.md`.
+
+## Completion and failure handling
+
+Before reporting completion:
+
+1. Parse every written YAML file with an available YAML parser.
+2. Check required keys and the allowed `current_stage` values against the local schema.
+3. Confirm every referenced path exists or is explicitly marked missing.
+4. Preserve human-authored non-empty values unless regeneration was explicitly requested.
+5. Inspect the diff and confirm no files outside `.research/` changed.
+
+If parsing or schema validation fails, do not replace a previously valid manifest. Keep the recoverable prior content, report the file and field, and stop before dependent skills consume it. If inspection is incomplete, leave affected fields empty and list the limitation in `open_questions.md`; do not infer values.
 
 ## See also
 
